@@ -1,6 +1,6 @@
 {
   "name": "check-cpf",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Ferramenta validadora de CPFs",
   "main": "index.js",
   "scripts": {
