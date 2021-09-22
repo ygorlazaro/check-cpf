@@ -1,0 +1,18 @@
+{
+  "name": "check-cpf",
+  "version": "1.0.0",
+  "description": "Ferramenta validadora de CPFs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cpf",
+    "validacao",
+    "validação",
+    "validate",
+    "check"
+  ],
+  "author": "Ygor Lazaro",
+  "license": "MIT"
+}
