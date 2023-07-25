@@ -1,80 +1,45 @@
+const INVALID_CPFS = ["00000000000", "11111111111", "22222222222", "33333333333", "44444444444", "55555555555", "66666666666", "77777777777", "88888888888", "99999999999"];
+const MAX_CPF_SIZE = 11;
+
 const checkCpf = (cpf) => {
-    if (cpf === null || cpf === undefined) {
-        return false;
-    }
-
-    const MAX_CPF_SIZE = 11;
-
     if (cpf.length !== MAX_CPF_SIZE) {
         return false;
     }
 
-    if (
-        cpf == "00000000000" ||
-        cpf == "11111111111" ||
-        cpf == "22222222222" ||
-        cpf == "33333333333" ||
-        cpf == "44444444444" ||
-        cpf == "55555555555" ||
-        cpf == "66666666666" ||
-        cpf == "77777777777" ||
-        cpf == "88888888888" ||
-        cpf == "99999999999"
-    ) {
+    if (INVALID_CPFS.includes(cpf)) {
         return false;
     }
 
-    let number = 0;
-    let char = "";
-    const numbers = "0123456789";
-    let j = 10;
-    let sum = 0;
-    let mod = 0;
-    let dig1 = 0;
-    let dig2 = 0;
-    let cpfAux = "";
+    const sum = calculateSum(cpf);
+    const dig1 = calculateDigit(sum, 10);
+    const dig2 = calculateDigit(sum, 11);
 
-    cpfAux = cpf.substring(0, 9);
+    return cpf === cpf.substring(0, 9) + dig1.toString() + dig2.toString();
+};
+
+const calculateSum = (cpf) => {
+    let sum = 0;
 
     for (let i = 0; i < 9; i++) {
-        char = cpfAux.charAt(i);
+        const character = cpf.charAt(i);
+        const digit = Number(character);
 
-        if (numbers.search(char) == -1) {
+        if (!validDigits.includes(character)) {
             return false;
         }
-        number = Number(char);
-        sum += number * j;
-        j--;
-    }
-    mod = sum % 11;
-    dig1 = 11 - mod;
 
-    if (dig1 > 9) {
-        dig1 = 0;
-    }
-    j = 11;
-    sum = 0;
-    cpfAux += dig1;
-
-    for (let i = 0; i < 10; i++) {
-        char = cpfAux.charAt(i);
-        number = Number(char);
-        sum += number * j;
-        j--;
-    }
-    mod = sum % 11;
-    dig2 = 11 - mod;
-
-    if (dig2 > 9) {
-        dig2 = 0;
-    }
-    cpfAux += dig2;
-
-    if (cpf != cpfAux) {
-        return false;
+        sum += digit * (10 - i);
     }
 
-    return true;
+    return sum;
+};
+
+const calculateDigit = (sum, subtractor) => {
+    const mod = sum % subtractor;
+    let digit = subtractor - mod;
+    digit %= 10;
+
+    return digit;
 };
 
 module.exports = checkCpf;
